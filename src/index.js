@@ -48,7 +48,7 @@ app.get("/api/pilots", async (req, res) => {
 
 app.post("/api/pilots", async (req, res) => {
   try {
-    let { name, workExperience, location, coordinates } = req.body;
+    let { name, workExperience, location, coordinates, profile_img } = req.body;
     const { lat, lng } = coordinates;
 
     if (!location) {
@@ -80,6 +80,7 @@ app.post("/api/pilots", async (req, res) => {
 
     const pilot = await Pilot.create({
       name,
+      profileImage: profile_img,
       workExperience,
       location,
       coordinates,
