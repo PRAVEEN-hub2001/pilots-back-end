@@ -50,7 +50,7 @@ app.post("/api/pilots", async (req, res) => {
   try {
     let { name, workExperience, profile_img, location, coordinates } = req.body;
     const { lat, lng } = coordinates;
-    console.log("test56")
+    
     if (!location) {
       const response = await fetch(
         `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lng}&localityLanguage=en`
@@ -61,8 +61,7 @@ app.post("/api/pilots", async (req, res) => {
       const data = await response.json();
       location = `${data.locality}, ${data.city}`;
     }
-
-    if (location) {
+    else {
       const response = await fetch(
         `https://nominatim.openstreetmap.org/search?format=json&q=${location}`
       );
@@ -77,7 +76,7 @@ app.post("/api/pilots", async (req, res) => {
         throw new Error("Invalid city name");
       }
     }
-console.log("test1")
+
     const pilot = await Pilot.create({
       name,
       profileImage: profile_img,
@@ -88,7 +87,6 @@ console.log("test1")
 
     return res.status(200).json({ message: "Successfully Created!", pilot });
   } catch (err) {
-    console.log(err)
     return res.status(500).json({ message: "Creation Failed!" });
   }
 });
