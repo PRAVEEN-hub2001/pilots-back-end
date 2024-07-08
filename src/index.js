@@ -61,7 +61,8 @@ app.post("/api/pilots", async (req, res) => {
       const data = await response.json();
       location = `${data.locality}, ${data.city}`;
     }
-    else {
+    else { 
+      console.log(location) 
       const response = await fetch(
         `https://nominatim.openstreetmap.org/search?format=json&q=${location}`
       );
