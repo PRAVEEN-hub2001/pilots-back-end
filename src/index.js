@@ -88,6 +88,7 @@ console.log("test1")
 
     return res.status(200).json({ message: "Successfully Created!", pilot });
   } catch (err) {
+    console.log(err)
     return res.status(500).json({ message: "Creation Failed!" });
   }
 });
