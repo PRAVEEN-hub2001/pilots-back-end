@@ -50,7 +50,7 @@ app.post("/api/pilots", async (req, res) => {
   try {
     let { name, workExperience, profile_img, location, coordinates } = req.body;
     const { lat, lng } = coordinates;
-
+    console.log("test56")
     if (!location) {
       const response = await fetch(
         `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lng}&localityLanguage=en`
@@ -77,7 +77,7 @@ app.post("/api/pilots", async (req, res) => {
         throw new Error("Invalid city name");
       }
     }
-
+console.log("test1")
     const pilot = await Pilot.create({
       name,
       profileImage: profile_img,
