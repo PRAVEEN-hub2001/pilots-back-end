@@ -10,7 +10,7 @@ const PORT = process.env.PORT || 5000;
 
 // Middleware
 app.use(cors());
-app.use(bodyParser.json());
+app.use(bodyParser.json({ limit: "50mb" }));
 
 // MongoDB Connection
 mongoose
@@ -48,7 +48,7 @@ app.get("/api/pilots", async (req, res) => {
 
 app.post("/api/pilots", async (req, res) => {
   try {
-    let { name, workExperience, location, coordinates, profile_img } = req.body;
+    let { name, workExperience, profile_img, location, coordinates } = req.body;
     const { lat, lng } = coordinates;
 
     if (!location) {
