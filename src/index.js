@@ -12,6 +12,11 @@ const distance = require("./router/getAllPilots");
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+var corsOptions = {
+  origin: "https://praveen-hub2001.github.io",
+  optionsSuccessStatus: 200,
+};
+
 // MongoDB Connection
 mongoose
   .connect(process.env.DB_URL.replace("<PASSWORD>", process.env.DB_PASSWORD))
@@ -28,7 +33,7 @@ app.route("/api/pilots").post(createPilots);
 app.route("/api/distance").post(distance);
 
 // Middleware
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(bodyParser.json({ limit: "50mb" }));
 
 // Start server
