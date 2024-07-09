@@ -6,8 +6,8 @@ const bodyParser = require("body-parser");
 dotenv.config({ path: "./.env" });
 
 const getAllPilots = require("./router/getAllPilots");
-const createPilots = require("./router/getAllPilots");
-const distance = require("./router/getAllPilots");
+const createPilots = require("./router/createPilots");
+const distance = require("./router/distance");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -28,12 +28,13 @@ mongoose
   });
 
 // API Endpoints
-app.route("/api/pilots").get(getAllPilots);
-app.route("/api/pilots").post(createPilots);
-app.route("/api/distance").post(distance);
+app.get("/api/pilots", getAllPilots);
+app.post("/api/pilots", createPilots);
+app.post("/api/distance", distance);
 
 // Middleware
-app.use(cors(corsOptions));
+app.use(cors());
+app.use(express.json());
 app.use(bodyParser.json({ limit: "50mb" }));
 
 // Start server
