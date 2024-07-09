@@ -62,18 +62,14 @@ app.post("/api/pilots", async (req, res) => {
       location = `${data.locality}, ${data.city}`;
     }
     else { 
-      console.log(location) 
       const response = await fetch(
         `https://nominatim.openstreetmap.org/search?format=json&q=${location}`
       );
-        console.log(response.ok) 
       if (!response.ok) {
         throw new Error("Invalid city name");
       }
-      console.log(response) 
       const data = await response.json();
       
-      console.log(data) 
       if (data.length > 0) {
         const { lat, lon } = data[0];
         coordinates = { lat, lng: lon };
