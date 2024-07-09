@@ -36,7 +36,6 @@ const pilotSchema = new mongoose.Schema({
 const Pilot = mongoose.model("Pilot", pilotSchema);
 
 // API Endpoints
-// Example endpoint to fetch all pilots
 app.get("/api/pilots", async (req, res) => {
   try {
     const pilots = await Pilot.find();
@@ -66,7 +65,7 @@ app.post("/api/pilots", async (req, res) => {
         throw new Error("Invalid city name");
       }
     }
-    if (!location || location) {
+    if (!location) {
       const response = await fetch(
         `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lng}&localityLanguage=en`
       );
@@ -91,10 +90,9 @@ app.post("/api/pilots", async (req, res) => {
   }
 });
 
-// Example endpoint to calculate distance between two coordinates
 app.post("/api/distance", (req, res) => {
   const { lat1, lon1, lat2, lon2 } = req.body;
-  const R = 6371; // Radius of the Earth in kilometers
+  const R = 6371;
 
   const dLat = deg2rad(lat2 - lat1);
   const dLon = deg2rad(lon2 - lon1);
