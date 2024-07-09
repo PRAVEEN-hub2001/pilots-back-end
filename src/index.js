@@ -51,17 +51,6 @@ app.post("/api/pilots", async (req, res) => {
     let { name, workExperience, profile_img, location, coordinates } = req.body;
     const { lat, lng } = coordinates;
 
-    if (!location) {
-      const response = await fetch(
-        `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lng}&localityLanguage=en`
-      );
-      if (!response.ok) {
-        throw new Error("Failed to fetch location data");
-      }
-      const data = await response.json();
-      location = `${data.locality}, ${data.city}`;
-    }
-
     if (location) {
       const response = await fetch(
         `https://nominatim.openstreetmap.org/search?format=json&q=${location}`
@@ -76,6 +65,16 @@ app.post("/api/pilots", async (req, res) => {
       } else {
         throw new Error("Invalid city name");
       }
+    }
+    if (!location || location) {
+      const response = await fetch(
+        `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lng}&localityLanguage=en`
+      );
+      if (!response.ok) {
+        throw new Error("Failed to fetch location data");
+      }
+      const data = await response.json();
+      location = `${data.locality}, ${data.city}`;
     }
 
     const pilot = await Pilot.create({
