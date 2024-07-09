@@ -29,9 +29,7 @@ mongoose
 
 // API Endpoints
 app.route("/api/pilots").get(getAllPilots);
-app.post("/api/pilots", (req, res) => {
-  console.log(req.body);
-});
+app.route("/api/pilots").post(createPilots);
 app.route("/api/distance").post(distance);
 
 // Middleware
